@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 public class Player : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour
     public float timer = 1f;
     public GameObject trail;
     public GameObject death_particle;
-
+    public GameObject BGmusic;
     public Text maxscore_text;
     public int maxscore = 0;
 
@@ -24,6 +25,10 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        //–≈ À¿Ã¿
+        if (Advertisement.isSupported)
+            Advertisement.Initialize("4519507");
+
         rand = Random.Range(0, 3);
         goal2.transform.position = new Vector2(Random.Range(-1.44f, 1.44f), -1.9f);
         goal1.transform.position = new Vector2(Random.Range(-1.44f, 1.44f), 2.5f);
@@ -99,6 +104,16 @@ public class Player : MonoBehaviour
                 death_particle.transform.position = gameObject.transform.position;
                 death_particle.SetActive(true);
                 gameObject.GetComponent<Renderer>().enabled = false;
+
+                PlayerPrefs.SetInt("AdScore", PlayerPrefs.GetInt("AdScore") +score);
+                //–ÂÍÎ‡Ï‡
+                if (PlayerPrefs.GetInt("AdScore") > 150)
+                {
+                    BGmusic.SetActive(false);
+                    Advertisement.Show("Interstitial_Android");
+                    PlayerPrefs.SetInt("AdScore", 0);
+                }
+
                 timer_start = true;
                 if (PlayerPrefs.GetInt("MaxScore") < score)
                 {

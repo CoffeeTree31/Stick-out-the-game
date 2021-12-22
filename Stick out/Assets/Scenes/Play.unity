@@ -11159,6 +11159,7 @@ MonoBehaviour:
   timer: 1
   trail: {fileID: 302844363}
   death_particle: {fileID: 431513761}
+  BGmusic: {fileID: 60261449}
   maxscore_text: {fileID: 1461625663}
   maxscore: 0
   tap_to_move_text: {fileID: 744002489}
